@@ -197,7 +197,7 @@ class StompFailoverUri(object):
         self.brokers = brokers
 
     def _setOptions(self, options=None):
-        _options = dict((k, o.default) for (k, o) in list(self._SUPPORTED_OPTIONS.items()))
+        _options = dict((k, o.default) for (k, o) in self._SUPPORTED_OPTIONS.items())
         if options:
             _options.update((k, self._SUPPORTED_OPTIONS[k].parser(v)) for (k, _, v) in (o.partition('=') for o in options.split(',')))
         self.options = _options

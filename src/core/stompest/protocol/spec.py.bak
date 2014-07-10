@@ -50,7 +50,7 @@ class StompSpec(object):
     }
 
     COMMANDS = dict(CLIENT_COMMANDS)
-    for (version, commands) in list(SERVER_COMMANDS.items()):
+    for (version, commands) in SERVER_COMMANDS.items():
         COMMANDS.setdefault(version, set()).update(commands)
 
     COMMANDS_BODY_ALLOWED = {

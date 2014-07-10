@@ -56,7 +56,7 @@ class InFlightOperations(collections.MutableMapping):
         log and log.debug('%s complete.' % info)
 
     def info(self, key):
-        return ' '.join(map(str, [_f for _f in (self._info, key) if _f]))
+        return ' '.join(map(str, filter(None, (self._info, key))))
 
 class WaitingDeferred(defer.Deferred):
     @defer.inlineCallbacks

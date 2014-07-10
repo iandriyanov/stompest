@@ -8,7 +8,6 @@ from stompest.protocol import StompSpec
 
 from .util import sendToErrorDestination
 from stompest.async.util import WaitingDeferred, InFlightOperations
-import collections
 
 LOG_CATEGORY = __name__
 
@@ -151,7 +150,7 @@ class ReceiptListener(Listener):
         self.log = logging.getLogger(LOG_CATEGORY)
 
     def onConnectionLost(self, connection, reason): # @UnusedVariable
-        for waiting in list(self._receipts.values()):
+        for waiting in self._receipts.values():
             if waiting.called:
                 continue
             waiting.errback(StompCancelledError('Receipt did not arrive (connection lost)'))
@@ -183,7 +182,7 @@ class SubscriptionListener(Listener):
     DEFAULT_ACK_MODE = 'client-individual'
 
     def __init__(self, handler, ack=True, errorDestination=None, onMessageFailed=None):
-        if not isinstance(handler, collections.Callable):
+        if not callable(handler):
             raise ValueError('Handler is not callable: %s' % handler)
         self._handler = handler
         self._ack = ack
@@ -245,7 +244,7 @@ class SubscriptionListener(Listener):
         connection.remove(self)
 
     def _waitForMessages(self, timeout):
-        return task.cooperate(handler.wait(timeout, StompCancelledError('Handlers did not finish in time.')) for handler in list(self._messages.values())).whenDone()
+        return task.cooperate(handler.wait(timeout, StompCancelledError('Handlers did not finish in time.')) for handler in self._messages.values()).whenDone()
 
 class HeartBeatListener(Listener):
     """Handles heart-beating.

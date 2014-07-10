@@ -33,9 +33,9 @@ class ExclusiveWrapperTest(unittest.TestCase):
         def g():
             yield task.deferLater(reactor, 0, lambda: {}[None])
 
-        for _ in range(5):
+        for _ in xrange(5):
             running = g()
-            for _ in range(5):
+            for _ in xrange(5):
                 self.assertRaises(StompAlreadyRunningError, g)
             try:
                 yield running

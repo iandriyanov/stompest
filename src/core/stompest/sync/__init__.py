@@ -1,1 +1,1 @@
-from client import Stomp
+from .client import Stomp

@@ -1,5 +1,5 @@
 import collections
-import io
+import cStringIO
 
 from stompest.error import StompFrameError
 
@@ -76,7 +76,7 @@ class StompParser(object):
         self._next()
 
     def _flush(self):
-        self._buffer = io.StringIO()
+        self._buffer = cStringIO.StringIO()
 
     def _next(self):
         self._frame = None

@@ -29,7 +29,7 @@ import itertools
 import time
 import uuid
 
-from . import commands
+import commands
 from stompest.error import StompProtocolError
 
 class StompSession(object):
@@ -47,7 +47,7 @@ class StompSession(object):
     def __init__(self, version=None, check=True):
         self.version = version
         self._check = check
-        self._nextSubscription = itertools.count().__next__
+        self._nextSubscription = itertools.count().next
         self._reset()
         self._flush()
 
@@ -301,7 +301,7 @@ class StompSession(object):
         """Flush all active subscriptions and return an iterator over the :meth:`subscribe` parameters (**destinations**, **header**, **receipt**, **context**) which you can consume to replay the subscriptions upon the next :meth:`connect`."""
         subscriptions = self._subscriptions
         self._flush()
-        for (_, destination, headers, receipt, context) in sorted(subscriptions.values()):
+        for (_, destination, headers, receipt, context) in sorted(subscriptions.itervalues()):
             yield destination, headers, receipt, context
 
     def subscription(self, token):

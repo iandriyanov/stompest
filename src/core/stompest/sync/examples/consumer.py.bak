@@ -11,6 +11,6 @@ if __name__ == '__main__':
     client.subscribe(QUEUE, {StompSpec.ACK_HEADER: StompSpec.ACK_CLIENT_INDIVIDUAL})
     while True:
         frame = client.receiveFrame()
-        print(('Got %s' % frame.info()))
+        print('Got %s' % frame.info())
         client.ack(frame)
     client.disconnect()

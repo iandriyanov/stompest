@@ -132,7 +132,7 @@ class SimpleStompIntegrationTest(unittest.TestCase):
         try:
             client.connect(host=VIRTUALHOST, versions=[version])
         except StompProtocolError as e:
-            print(('Broker does not support STOMP protocol %s. Skipping this test case. [%s]' % (e, version)))
+            print('Broker does not support STOMP protocol %s. Skipping this test case. [%s]' % (e, version))
             return
 
         client.send(self.DESTINATION, 'test message 1')
@@ -180,7 +180,7 @@ class SimpleStompIntegrationTest(unittest.TestCase):
         try:
             client.connect(host=VIRTUALHOST, heartBeats=(heartBeatPeriod, heartBeatPeriod), versions=[version])
         except StompProtocolError as e:
-            print(('Broker does not support STOMP protocol %s. Skipping this test case. [%s]' % (e, version)))
+            print('Broker does not support STOMP protocol %s. Skipping this test case. [%s]' % (e, version))
             return
 
         self.assertTrue((time.time() - client.lastReceived) < 0.1)
@@ -226,7 +226,7 @@ class SimpleStompIntegrationTest(unittest.TestCase):
         try:
             client.connect(host=VIRTUALHOST, versions=[version])
         except StompProtocolError as e:
-            print(('Broker does not support STOMP protocol %s. Skipping this test case. [%s]' % (e, version)))
+            print('Broker does not support STOMP protocol %s. Skipping this test case. [%s]' % (e, version))
             return
 
         specialCharactersHeader = 'fen\xeatre:\r\n'

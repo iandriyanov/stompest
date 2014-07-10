@@ -144,19 +144,19 @@ class StompFailoverTest(unittest.TestCase):
         uri = 'failover:tcp://remote1:61616?useExponentialBackOff=false,startupMaxReconnectAttempts=1,reconnectDelayJitter=4'
         for j in itertools.count():
             protocol = iter(StompFailoverTransport(uri))
-            next(protocol)
-            _, delay = next(protocol)
+            protocol.next()
+            _, delay = protocol.next()
             self.assertTrue(abs(delay - 0.01) < 0.004)
             if (j > 10) and (abs(delay - 0.01) > 0.003):
                 break
 
     def _test_failover(self, brokersAndDelays, expectedDelaysAndBrokers):
         for (expectedDelay, expectedBroker) in expectedDelaysAndBrokers:
-            broker, delay = next(brokersAndDelays)
+            broker, delay = brokersAndDelays.next()
             self.assertEquals(delay, expectedDelay)
             self.assertEquals(broker, expectedBroker)
 
-        self.assertRaises(StompConnectTimeout, brokersAndDelays.__next__)
+        self.assertRaises(StompConnectTimeout, brokersAndDelays.next)
 
 if __name__ == '__main__':
     unittest.main()
